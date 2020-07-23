@@ -5,7 +5,15 @@ import javax.validation.constraints.NotNull;
 public class SaveProductRequest {
 
     @NotNull
-    private String name;
+    private String brandName;
+
+    @NotNull
+    private String shoeCode;
+
+    @NotNull
+    private double size;
+
+    private String gender;
     private  String description;
     @NotNull
     private double price;
@@ -13,12 +21,36 @@ public class SaveProductRequest {
     @NotNull
     private  int quantity;
 
-    public String getName() {
-        return name;
+    public String getBrandName() {
+        return brandName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setBrandName(String brandName) {
+        this.brandName = brandName;
+    }
+
+    public String getShoeCode() {
+        return shoeCode;
+    }
+
+    public void setShoeCode(String shoeCode) {
+        this.shoeCode = shoeCode;
+    }
+
+    public double getSize() {
+        return size;
+    }
+
+    public void setSize(double size) {
+        this.size = size;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
     }
 
     public String getDescription() {
@@ -56,7 +88,10 @@ public class SaveProductRequest {
     @Override
     public String toString() {
         return "SaveProductRequest{" +
-                "name='" + name + '\'' +
+                "brandName='" + brandName + '\'' +
+                ", shoeCode='" + shoeCode + '\'' +
+                ", size=" + size +
+                ", gender='" + gender + '\'' +
                 ", description='" + description + '\'' +
                 ", price=" + price +
                 ", imageUrl='" + imageUrl + '\'' +

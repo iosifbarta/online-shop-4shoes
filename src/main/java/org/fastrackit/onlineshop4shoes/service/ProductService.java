@@ -24,7 +24,10 @@ public class ProductService {
     public Product createProduct (SaveProductRequest request){
         LOGGER.info("Creating product {}", request);
         Product product = new Product();
-        product.setName(request.getName());
+        product.setBrandName(request.getBrandName());
+        product.setSize(request.getSize());
+        product.setShoeCode(request.getShoeCode());
+        product.setGender(request.getGender());
         product.setDescription(request.getDescription());
         product.setPrice(request.getPrice());
         product.setQuantity(request.getQuantity());
