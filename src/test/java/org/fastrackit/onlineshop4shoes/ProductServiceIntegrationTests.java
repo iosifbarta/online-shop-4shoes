@@ -148,6 +148,26 @@ class ProductServiceIntegrationTests {
                 () -> productService.getProduct(0));
     }
 
+//    @Test
+//    void getProducts_whenExistingProducts_thenReturnProducts(){
+//
+//        Product product1 = createProduct();
+//        Product product2 = createProduct();
+//
+//        Product response = (Product) productService.getProducts(product1.getId(), product2.getId());
+//
+//        assertThat(response, notNullValue());
+//        assertThat(response.getId(), is(product.getId()));
+//        assertThat(response.getBrandName(), is(product.getBrandName()));
+//        assertThat(response.getShoeCode(), is(product.getShoeCode()));
+//        assertThat(response.getPrice(), is(product.getPrice()));
+//        assertThat(response.getQuantity(), is(product.getQuantity()));
+//        assertThat(response.getSize(), is(product.getSize()));
+//        assertThat(response.getGender(), is(product.getGender()));
+//        assertThat(response.getImageUrl(), is(product.getImageUrl()));
+//        assertThat(response.getDescription(), is(product.getDescription()));
+//    }
+
     @Test
     void updateProduct_whenValidRequest_thenReturnUpdateProduct (){
 

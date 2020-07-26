@@ -3,11 +3,15 @@ package org.fastrackit.onlineshop4shoes.service;
 import org.fastrackit.onlineshop4shoes.domain.Product;
 import org.fastrackit.onlineshop4shoes.exception.ResourceNotFoundException;
 import org.fastrackit.onlineshop4shoes.persistence.ProductRepository;
+import org.fastrackit.onlineshop4shoes.transfer.GetProductsRequest;
 import org.fastrackit.onlineshop4shoes.transfer.SaveProductRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.data.web.SpringDataWebProperties;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -48,6 +52,13 @@ public class ProductService {
                 .orElseThrow(() -> new ResourceNotFoundException("Product " + id + " not found."));
     }
 
+    public Page<Product> getProducts (GetProductsRequest request, Pageable pageable) {
+
+        return productRepository.findByOptionalCriteria(request.getPartialName(),request.getMinimumQuantity(),request.getSize(),
+                request.getGender(),request.getMinimumQuantity(),pageable);
+
+    }
+
     public Product updateProduct(long id, SaveProductRequest request){
 
         LOGGER.info("Updating product {}: {} ", id, request );
@@ -63,4 +74,5 @@ public class ProductService {
         LOGGER.info("Deleting product {} ", id);
         productRepository.deleteById(id);
     }
+
 }
