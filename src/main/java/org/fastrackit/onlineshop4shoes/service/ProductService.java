@@ -9,18 +9,15 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.data.web.SpringDataWebProperties;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
 
 @Service
 public class ProductService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ProductService.class);
-
 
     private final ProductRepository productRepository;
 

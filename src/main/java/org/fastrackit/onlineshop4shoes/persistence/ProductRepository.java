@@ -9,7 +9,7 @@ import org.springframework.data.jpa.repository.Query;
 public interface ProductRepository extends JpaRepository<Product, Long> {
 
    @Query(value = "SELECT  product FROM  Product  product WHERE "+
-           "(:partialName IS null OR product.brandName = :partialName) AND "+
+           "(:partialName IS null OR product.brandName LIKE %:partialName%) AND "+
            "(:minimumQuantity IS null OR product.quantity = :minimumQuantity) AND "+
            "(:size IS null OR product.size = :size) AND "+
            "(:gender IS null OR product.gender = :gender) AND"+
