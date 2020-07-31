@@ -1,8 +1,8 @@
 package org.fastrackit.onlineshop4shoes.steps;
 
-import org.fastrackit.onlineshop4shoes.domain.Product;
 import org.fastrackit.onlineshop4shoes.service.ProductService;
-import org.fastrackit.onlineshop4shoes.transfer.SaveProductRequest;
+import org.fastrackit.onlineshop4shoes.transfer.product.ProductResponse;
+import org.fastrackit.onlineshop4shoes.transfer.product.SaveProductRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -18,7 +18,7 @@ public class ProductTestSteps {
     @Autowired
     private ProductService productService;
 
-    public Product createProduct() {
+    public ProductResponse createProduct() {
         SaveProductRequest request = new SaveProductRequest();
         request.setBrandName("Gabor");
         request.setPrice(219);
@@ -27,7 +27,7 @@ public class ProductTestSteps {
         request.setShoeCode("GB72510 05-N");
         request.setQuantity(7);
 
-        Product product = productService.createProduct(request);
+        ProductResponse product = productService.createProduct(request);
 
         assertThat(product, notNullValue());
         assertThat(product.getId(), greaterThan(0L));

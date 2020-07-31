@@ -1,12 +1,12 @@
 package org.fastrackit.onlineshop4shoes;
 
-import org.fastrackit.onlineshop4shoes.domain.Product;
 import org.fastrackit.onlineshop4shoes.domain.User;
 import org.fastrackit.onlineshop4shoes.service.CartService;
 import org.fastrackit.onlineshop4shoes.steps.ProductTestSteps;
 import org.fastrackit.onlineshop4shoes.steps.UserTestSteps;
 import org.fastrackit.onlineshop4shoes.transfer.cart.AddedProductsToCartRequest;
 import org.fastrackit.onlineshop4shoes.transfer.cart.CartResponse;
+import org.fastrackit.onlineshop4shoes.transfer.product.ProductResponse;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -32,7 +32,7 @@ public class CartServiceIntegrationTests {
     @Test
     void addProductsToCart_whenNewCart_theCartIsCreated(){
         User user = userTestSteps.createUser();
-        Product product = productTestSteps.createProduct();
+        ProductResponse product = productTestSteps.createProduct();
 
         AddedProductsToCartRequest cartRequest = new AddedProductsToCartRequest();
 

@@ -1,17 +1,23 @@
 package org.fastrackit.onlineshop4shoes.service;
 
+
 import org.fastrackit.onlineshop4shoes.domain.Product;
 import org.fastrackit.onlineshop4shoes.exception.ResourceNotFoundException;
 import org.fastrackit.onlineshop4shoes.persistence.ProductRepository;
-import org.fastrackit.onlineshop4shoes.transfer.GetProductsRequest;
-import org.fastrackit.onlineshop4shoes.transfer.SaveProductRequest;
+import org.fastrackit.onlineshop4shoes.transfer.product.GetProductsRequest;
+import org.fastrackit.onlineshop4shoes.transfer.product.ProductResponse;
+import org.fastrackit.onlineshop4shoes.transfer.product.SaveProductRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import javax.transaction.Transactional;
+import java.util.ArrayList;
+import java.util.List;
 
 
 @Service
@@ -21,12 +27,14 @@ public class ProductService {
 
     private final ProductRepository productRepository;
 
+
     @Autowired
     public ProductService(ProductRepository productRepository) {
         this.productRepository = productRepository;
+
     }
 
-    public Product createProduct (SaveProductRequest request){
+    public ProductResponse createProduct (SaveProductRequest request){
         LOGGER.info("Creating product {}", request);
         Product product = new Product();
         product.setBrandName(request.getBrandName());
@@ -38,32 +46,51 @@ public class ProductService {
         product.setQuantity(request.getQuantity());
         product.setImageUrl(request.getImageUrl());
 
-        return productRepository.save(product);
+        Product saveProduct = productRepository.save(product);
+        return mapProductResponse(saveProduct);
+
     }
 
+    public ProductResponse getProductResponse(long id){
 
-    public Product getProduct(long id){
 
         LOGGER.info("Retrieving product {}", id);
+        Product product = getProduct(id);
+
+        return mapProductResponse(product);
+
+    }
+
+    public Product getProduct(long id) {
         return productRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Product " + id + " not found."));
+                    .orElseThrow(() -> new ResourceNotFoundException("Product " + id + " not found."));
     }
 
-    public Page<Product> getProducts (GetProductsRequest request, Pageable pageable) {
+    @Transactional
+    public Page<ProductResponse> getProducts (GetProductsRequest request, Pageable pageable) {
 
-        return productRepository.findByOptionalCriteria(request.getPartialName(),request.getMinimumQuantity(),request.getSize(),
-                request.getGender(),request.getMinimumQuantity(),pageable);
+        Page<Product> page = productRepository.findByOptionalCriteria(request.getPartialName(), request.getMinimumQuantity(), request.getSize(),
+                request.getGender(), request.getMinimumQuantity(), pageable);
 
+        List<ProductResponse>productsDtos = new ArrayList<>();
+        for(Product product : page.getContent()){
+            ProductResponse productResponse =mapProductResponse(product);
+            productsDtos.add(productResponse);
+        }
+        return new PageImpl<>(productsDtos, pageable, page.getTotalElements());
     }
 
-    public Product updateProduct(long id, SaveProductRequest request){
+    public ProductResponse updateProduct(long id, SaveProductRequest request){
 
         LOGGER.info("Updating product {}: {} ", id, request );
 
         Product product = getProduct(id);
 
         BeanUtils.copyProperties(request, product);
-        return productRepository.save(product);
+        Product saveProduct =  productRepository.save(product);
+
+        return mapProductResponse(saveProduct);
+
     }
 
     public void deleteProduct(long id){
@@ -72,4 +99,19 @@ public class ProductService {
         productRepository.deleteById(id);
     }
 
+    private ProductResponse mapProductResponse(Product product){
+
+        ProductResponse productResponse = new ProductResponse();
+        productResponse.setId(product.getId());
+        productResponse.setBrandName(product.getBrandName());
+        productResponse.setPrice(product.getPrice());
+        productResponse.setGender(product.getGender());
+        productResponse.setSize(product.getSize());
+        productResponse.setQuantity(product.getQuantity());
+        productResponse.setShoeCode(product.getShoeCode());
+        productResponse.setDescription(product.getDescription());
+        productResponse.setImageUrl(product.getImageUrl());
+
+        return productResponse;
+    }
 }
