@@ -9,12 +9,11 @@ import org.springframework.data.jpa.repository.Query;
 
 public interface ReviewRepository extends JpaRepository<Review, Long> {
 
-    @Query(value = "SELECT  review FROM  Review  review WHERE "+
-            "(:partialContent IS null OR review.content LIKE %:partialContent%) AND "+
-            "(:author IS null OR review.author = :author)")
-
-    Page<Review> findReviewsByContentContaining (String partialContent, Pageable pageable);
-
+//    @Query(value = "SELECT  review FROM  Review  review WHERE "+
+//            "(:partialContent IS null OR review.content LIKE %:partialContent%) AND "+
+//            "(:author IS null OR review.author = :author)")
+//
+//
     Page<Review> findReviewsByProductId (long productId, Pageable pageable);
 
 }

@@ -3,7 +3,6 @@ package org.fastrackit.onlineshop4shoes.service;
 import org.fastrackit.onlineshop4shoes.domain.Review;
 import org.fastrackit.onlineshop4shoes.exception.ResourceNotFoundException;
 import org.fastrackit.onlineshop4shoes.persistence.ReviewRepository;
-import org.fastrackit.onlineshop4shoes.transfer.review.GetReviewsRequest;
 import org.fastrackit.onlineshop4shoes.transfer.review.ReviewResponse;
 import org.fastrackit.onlineshop4shoes.transfer.review.SaveReviewRequest;
 import org.slf4j.Logger;
@@ -75,7 +74,6 @@ public class ReviewService {
         }
         return new PageImpl<>(reviewsList, pageable, reviewsPage.getTotalElements());
     }
-
 
     private ReviewResponse mapReviewResponse (Review review){
         ReviewResponse reviewResponse = new ReviewResponse();

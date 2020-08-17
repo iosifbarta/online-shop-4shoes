@@ -1,7 +1,6 @@
 package org.fastrackit.onlineshop4shoes.web;
 
 
-import org.fastrackit.onlineshop4shoes.domain.Cart;
 import org.fastrackit.onlineshop4shoes.service.CartService;
 import org.fastrackit.onlineshop4shoes.transfer.cart.AddedProductsToCartRequest;
 import org.fastrackit.onlineshop4shoes.transfer.cart.CartResponse;
@@ -36,4 +35,11 @@ public class CartController {
         CartResponse cart = cartService.getCart(userId);
         return new ResponseEntity<>(cart, HttpStatus.OK);
     }
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteProductFromCart(@PathVariable long id) {
+        cartService.deleteProductFromCart(id);
+
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
 }

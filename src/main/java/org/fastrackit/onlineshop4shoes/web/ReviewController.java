@@ -2,7 +2,6 @@ package org.fastrackit.onlineshop4shoes.web;
 
 
 import org.fastrackit.onlineshop4shoes.service.ReviewService;
-import org.fastrackit.onlineshop4shoes.transfer.review.GetReviewsRequest;
 import org.fastrackit.onlineshop4shoes.transfer.review.ReviewResponse;
 import org.fastrackit.onlineshop4shoes.transfer.review.SaveReviewRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,5 +44,12 @@ public class ReviewController {
         return new ResponseEntity<>(reviews, HttpStatus.OK);
 
     }
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteReview (@PathVariable long id){
+        reviewService.deleteReview(id);
+
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+//    public ResponseEntity<Page<ReviewResponse>>
 
 }

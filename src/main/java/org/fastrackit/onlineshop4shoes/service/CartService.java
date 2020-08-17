@@ -17,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
+
 @Service
 public class CartService {
     private static final Logger LOGGER = LoggerFactory.getLogger(CartService.class);
@@ -72,5 +73,10 @@ public class CartService {
         }
         cartResponse.setProducts(productDtos);
         return cartResponse;
+    }
+    @Transactional
+    public void deleteProductFromCart(long id){
+        LOGGER.info("Deleting product {}", id);
+        cartRepository.deleteById(id);
     }
 }

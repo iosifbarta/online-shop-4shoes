@@ -9,6 +9,8 @@ import org.fastrackit.onlineshop4shoes.transfer.user.CreateUserRequest;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.annotation.DirtiesContext;
+import org.springframework.test.context.ActiveProfiles;
 
 import javax.validation.ConstraintViolationException;
 
@@ -18,6 +20,8 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.greaterThan;
 
 @SpringBootTest
+@ActiveProfiles("test")
+@DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
 public class UserServiceIntegrationTests {
 
     @Autowired
@@ -63,9 +67,9 @@ public class UserServiceIntegrationTests {
     }
     private User createUser() {
         CreateUserRequest request = new CreateUserRequest();
-        request.setRole(UserRole.CUSTOMER);
-        request.setFirstName("Test FirstName");
-        request.setLastName("Test LastName");
+        request.setRole(UserRole.ADMIN);
+        request.setFirstName("Dumitru");
+        request.setLastName("Vasile");
 
         User user = userService.createUser(request);
 
